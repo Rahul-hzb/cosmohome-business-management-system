@@ -35,4 +35,29 @@ const loginAdmin = async (email, password) => {
   };
 };
 
-export { loginAdmin };
+const changePassword = async (adminId, currentPassword, newPassword) => {
+  const admin = await Admin.findById(adminId);
+
+  if (!admin) {
+    throw new Error("Admin not found");
+  }
+
+  // Verify current password
+  const isPasswordMatch = await bcrypt.compare(currentPassword, admin.password);
+
+  if (!isPasswordMatch) {
+    throw new Error("Current password is incorrect");
+  }
+
+  // Hash new password
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  admin.password = hashedPassword;
+
+  await admin.save();
+
+  return;
+};
+
+
+export { loginAdmin, changePassword };
