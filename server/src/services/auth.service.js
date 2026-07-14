@@ -11,6 +11,7 @@ const loginAdmin = async (email, password) => {
   }
 
   // Compare password
+
   const isPasswordMatch = await bcrypt.compare(password, admin.password);
 
   if (!isPasswordMatch) {
@@ -58,6 +59,5 @@ const changePassword = async (adminId, currentPassword, newPassword) => {
 
   return;
 };
-
 
 export { loginAdmin, changePassword };

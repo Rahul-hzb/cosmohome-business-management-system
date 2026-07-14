@@ -4,13 +4,12 @@
   "type": "module",
   "description": "",
   "main": "index.js",
- "scripts": {
-  "dev": "nodemon src/server.js",
-  "start": "node src/server.js",
-  "seed": "node src/seed/seed.admin.js"
- },
- 
- 
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed/seed.admin.js",
+    "reset-admin": "node src/seed/reset.admin.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
