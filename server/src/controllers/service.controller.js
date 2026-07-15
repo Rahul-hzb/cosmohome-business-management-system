@@ -4,6 +4,9 @@ import {
   getServiceById,
   updateService,
   deleteService,
+  getTrashServices,
+  restoreService,
+  permanentDeleteService,
 } from "../services/service.service.js";
 
 // Create Service
@@ -41,6 +44,56 @@ const getAll = async (req, res) => {
     });
   }
 };
+const getTrash = async (req, res) => {
+  try {
+    const services = await getTrashServices();
+
+    res.status(200).json({
+      success: true,
+      count: services.length,
+      data: services,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const restore = async (req, res) => {
+  try {
+    const service = await restoreService(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Service restored successfully.",
+      data: service,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const permanentDelete = async (req, res) => {
+  try {
+    await permanentDeleteService(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Service permanently deleted.",
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 
 // Get Service By ID
 const getById = async (req, res) => {
@@ -80,11 +133,12 @@ const update = async (req, res) => {
 // Delete Service
 const remove = async (req, res) => {
   try {
-    await deleteService(req.params.id);
+    const service = await deleteService(req.params.id);
 
     res.status(200).json({
       success: true,
-      message: "Service deleted successfully.",
+      message: "Service moved to trash successfully.",
+      data: service,
     });
   } catch (error) {
     res.status(404).json({
@@ -94,4 +148,4 @@ const remove = async (req, res) => {
   }
 };
 
-export { create, getAll, getById, update, remove };
+export { create, getAll, getById, update, remove,getTrash, restore, permanentDelete };

@@ -31,17 +31,68 @@ const createService = async (serviceData) => {
 
 // Get All Services
 const getAllServices = async () => {
-  return await Service.find()
+  return await Service.find({
+    isDeleted: false,
+  })
+  .sort({
+    displayOrder: 1,
+    createdAt: -1,
+  })
+  .lean();
+    
+};
+
+// Get Deleted Services
+const getTrashServices = async () => {
+  return await Service.find({
+    isDeleted: true,
+  })
     .sort({
-      displayOrder: 1,
-      createdAt: -1,
+      updatedAt: -1,
     })
     .lean();
 };
 
+// Restore Service
+const restoreService = async (id) => {
+  const service = await Service.findOne({
+    _id: id,
+    isDeleted: true,
+  });
+
+  if (!service) {
+    throw new Error("Service not found in trash");
+  }
+
+  service.isDeleted = false;
+
+  await service.save();
+
+  return service;
+};
+
+// Permanently Delete Service
+const permanentDeleteService = async (id) => {
+  const service = await Service.findOne({
+    _id: id,
+    isDeleted: true,
+  });
+
+  if (!service) {
+    throw new Error("Service not found in trash");
+  }
+
+  await service.deleteOne();
+
+  return service;
+};
+
 // Get Service By ID
 const getServiceById = async (id) => {
-  const service = await Service.findById(id).lean();
+ const service = await Service.findOne({
+   _id: id,
+   isDeleted: false,
+ }).lean();
 
   if (!service) {
     throw new Error("Service not found");
@@ -52,7 +103,10 @@ const getServiceById = async (id) => {
 
 // Update Service
 const updateService = async (id, serviceData) => {
-  const service = await Service.findById(id);
+  const service = await Service.findOne({
+    _id: id,
+    isDeleted: false,
+  });
 
   if (!service) {
     throw new Error("Service not found");
@@ -115,13 +169,20 @@ const updateService = async (id, serviceData) => {
 
 // Delete Service
 const deleteService = async (id) => {
-  const service = await Service.findById(id);
+  const service = await Service.findOne({
+    _id: id,
+    isDeleted: false,
+  });
 
   if (!service) {
     throw new Error("Service not found");
   }
 
-  await service.deleteOne();
+  service.isDeleted = true;
+
+  await service.save();
+
+  return service;
 };
 
 export {
@@ -130,4 +191,7 @@ export {
   getServiceById,
   updateService,
   deleteService,
+  getTrashServices,
+  restoreService,
+  permanentDeleteService,
 };

@@ -92,6 +92,10 @@ const serviceSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
 
     displayOrder: {
       type: Number,
