@@ -17,6 +17,12 @@ import teamRoutes from "./routes/team.routes.js";
 
 import reviewRoutes from "./routes/review.routes.js";
 
+import appointmentRoutes from "./routes/appointment.routes.js";
+
+import announcementRoutes from "./routes/announcement.routes.js";
+
+import joinUsRoutes from "./routes/joinUs.routes.js";
+
 const app = express();
 
 app.use(express.json());
@@ -36,6 +42,12 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/team", teamRoutes);
 
 app.use("/api/reviews", reviewRoutes);
+
+app.use("/api/appointments", appointmentRoutes);
+
+app.use("/api/announcements", announcementRoutes);
+
+app.use("/api/join-us", joinUsRoutes);
 
 app.get("/", (req, res) => {
   res.json({
