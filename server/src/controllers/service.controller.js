@@ -12,7 +12,7 @@ import {
 // Create Service
 const create = async (req, res) => {
   try {
-    const service = await createService(req.body);
+    const service = await createService(req.body, req.file);
 
     res.status(201).json({
       success: true,
@@ -94,7 +94,6 @@ const permanentDelete = async (req, res) => {
   }
 };
 
-
 // Get Service By ID
 const getById = async (req, res) => {
   try {
@@ -115,7 +114,7 @@ const getById = async (req, res) => {
 // Update Service
 const update = async (req, res) => {
   try {
-    const service = await updateService(req.params.id, req.body);
+    const service = await updateService(req.params.id, req.body, req.file);
 
     res.status(200).json({
       success: true,
@@ -148,4 +147,13 @@ const remove = async (req, res) => {
   }
 };
 
-export { create, getAll, getById, update, remove,getTrash, restore, permanentDelete };
+export {
+  create,
+  getAll,
+  getById,
+  update,
+  remove,
+  getTrash,
+  restore,
+  permanentDelete,
+};

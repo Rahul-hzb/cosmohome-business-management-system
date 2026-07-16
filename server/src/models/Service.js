@@ -8,13 +8,21 @@ const imageSchema = new mongoose.Schema(
       trim: true,
     },
 
+    publicId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     alt: {
       type: String,
       default: "",
       trim: true,
     },
   },
-  { _id: false },
+  {
+    _id: false,
+  },
 );
 
 const serviceSchema = new mongoose.Schema(
@@ -35,9 +43,9 @@ const serviceSchema = new mongoose.Schema(
     },
 
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      trim: true,
     },
 
     shortDescription: {
