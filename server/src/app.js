@@ -23,6 +23,8 @@ import announcementRoutes from "./routes/announcement.routes.js";
 
 import joinUsRoutes from "./routes/joinUs.routes.js";
 
+import contactRoutes from "./routes/contact.routes.js";
+
 const app = express();
 
 app.use(express.json());
@@ -48,6 +50,8 @@ app.use("/api/appointments", appointmentRoutes);
 app.use("/api/announcements", announcementRoutes);
 
 app.use("/api/join-us", joinUsRoutes);
+
+app.use("/api/contact", contactRoutes);
 
 app.get("/", (req, res) => {
   res.json({
