@@ -25,6 +25,10 @@ import joinUsRoutes from "./routes/joinUs.routes.js";
 
 import contactRoutes from "./routes/contact.routes.js";
 
+import dashboardRoutes from "./routes/dashboard.routes.js";
+
+import productRoutes from "./routes/product.routes.js";
+
 const app = express();
 
 app.use(express.json());
@@ -52,6 +56,10 @@ app.use("/api/announcements", announcementRoutes);
 app.use("/api/join-us", joinUsRoutes);
 
 app.use("/api/contact", contactRoutes);
+
+app.use("/api/dashboard", dashboardRoutes);
+
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
   res.json({
