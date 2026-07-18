@@ -29,6 +29,10 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 
 import productRoutes from "./routes/product.routes.js";
 
+import trainingCourseRoutes from "./routes/trainingCourse.routes.js";
+
+import trainingEnquiryRoutes from "./routes/trainingEnquiry.routes.js";
+
 const app = express();
 
 app.use(express.json());
@@ -60,6 +64,11 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 app.use("/api/products", productRoutes);
+
+ 
+app.use("/api/training-courses", trainingCourseRoutes);
+
+app.use("/api/training-enquiries", trainingEnquiryRoutes);
 
 app.get("/", (req, res) => {
   res.json({
