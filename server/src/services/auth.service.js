@@ -33,6 +33,7 @@ const loginAdmin = async (email, password) => {
   return {
     admin,
     token,
+    
   };
 };
 
