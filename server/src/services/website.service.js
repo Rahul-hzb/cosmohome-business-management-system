@@ -4,10 +4,11 @@ import WebsiteSettings from "../models/WebsiteSettings.js";
 const getWebsiteSettings = async () => {
   let settings = await WebsiteSettings.findOne();
 
-  // Create default document if it doesn't exist
   if (!settings) {
     settings = await WebsiteSettings.create({
       companyName: "Cosmohome",
+      tagline: "",
+      about: "",
     });
   }
 
@@ -21,12 +22,16 @@ const updateWebsiteSettings = async (data) => {
   if (!settings) {
     settings = await WebsiteSettings.create({
       companyName: "Cosmohome",
-      ...data,
+      tagline: "",
+      about: "",
     });
-  } else {
-    Object.assign(settings, data);
-    await settings.save();
   }
+
+  settings.companyName = data.companyName ?? settings.companyName;
+  settings.tagline = data.tagline ?? settings.tagline;
+  settings.about = data.about ?? settings.about;
+
+  await settings.save();
 
   return settings;
 };
